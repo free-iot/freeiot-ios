@@ -1,0 +1,78 @@
+/* 
+  Strings.strings
+  OutletApp
+
+  Created by liming_llm on 15/4/13.
+  Copyright (c) 2015年 liming_llm. All rights reserved.
+*/
+
+
+/* ----------------------------  view title ----------------------------------- */
+
+"MYDEVICE_TITLE"                    = "My Devices";
+"REGISTER_TITLE"                    = "Create Account";
+"RESET_TITLE"                       = "Password Reset";
+"ADDDEVICE_TITLE"                   = "Add";
+"DEVICEAUTH_TITLE"                  = "Authorize";
+
+/* ----------------------------  Login view ----------------------------------- */
+"LOGIN_BTN_TITLE"                   = "Sign In";
+"USERNAME_TEXT_PLACEHOLDER"         = "E-Mail Address";
+"USERNAME_TEXT_PLACEHOLDER_PHONE"   = "Phone Number";
+"PASSWORD_TEXT_PLACEHOLDER"         = "Password";
+"FORGET_BTN_TLTLE"                  = "Forgot?";
+"SIGNUP_BTN_TITLE"                  = "Sign Up";
+
+/* ----------------------------  MyDevice view ----------------------------------- */
+"LEFT_BTN_TITLE"                    = "Sign Out";
+
+/* ----------------------------  alert title & msg ---------------------------- */
+
+"UNBIND_ALERT_MSG"                  = "After unbinding,you and your authorized users will lose the authority to operate device";
+"CHANGEWIFI_ALERT_TITLE"            = "请切换WiFi网络";
+"CHANGEWIFI_ALERT_MSG"              = "请点击手机\"设置\"->\"Wi-Fi\"，在WiFi列表中，连接到%@";
+"PASSEMPTY_ALERT_MSG"               = "您没有输入密码，确认WiFi网络无密码？";
+"GIVEUP_ALERT_MSG"                  = "放弃本次配置";
+"CONFIGFAIL_ALERT_MSG"              = "无法完成配置，请确认:\n1.WiFi名称与密码是否输入正确;\n2.是否连接了插座发出的网络。";
+"CONFIGFAIL_ALERT_TITLE"            = "配置失败";
+"BINDDEVICE_SUCCESS_ALERT_TITLE"    = "绑定设备成功";
+"BINDDEVICE_FAIL_ALERT_TITLE"       = "绑定设备失败";
+"DEVICESTATUS_FAIL_ALERT_TILTE"     = "获取设备(%@)状态失败";
+"DEVICEOFFLINE_ALERT_TITLE"         = "设备不在线";
+"DEVICEOFFLINE_ALERT_MSG"           = "设备不在线，无法进行操作";
+
+/* ----------------------------  common string ------------------------------- */
+
+"STR_OK"                            = "确定";
+"STR_CANCEL"                        = "取消";
+"STR_CHANGE_WIFI"                   = "请切换WiFi网络为%@";
+"STR_CONNECT_FAIL"                  = "连接失败";
+"STR_ERROR"                         = "错误";
+"STR_FAIL"                          = "失败";
+"STR_SUCCESS"                       = "成功";
+"STR_NO_RESPONSE"                   = "服务器没有响应";
+"STR_READONLY"                      = "仅接收消息";
+"STR_RANDW"                         = "操控设备并且接收消息";
+"STR_DEVICEAUTH"                    = "Authorize";
+"STR_UNBIND"                        = "Delete";
+"STR_MODIFY"                        = "Modify";
+"STR_GETAUTHCODE"                   = "发送验证码";
+
+/* ----------------------------  error code string ---------------------------- */
+
+"系统错误"                           = "系统错误";
+"权限错误"                           = "权限错误";
+"未知指令"                           = "未知指令";
+"参数错误"                           = "参数错误";
+"发送错误"                           = "发送错误";
+"密码错误"                           = "密码错误";
+"注册的电话号码已存在"                 = "注册的电话号码已存在";
+"手机验证码过期"                      = "手机验证码过期";
+"手机验证码错误"                      = "手机验证码错误";
+"未知属性"                           = "未知属性";
+"请求格式不正确"                      = "请求格式不正确";
+"设备不在线"                         = "设备不在线";
+"请重新登录"                         = "请重新登录";
+"设备不存在"                         = "设备不存在";
+"用户名无效"                         = "用户名无效";
+"设备已经绑定"                       = "设备已经绑定";

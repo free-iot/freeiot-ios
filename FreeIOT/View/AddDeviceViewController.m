@@ -642,7 +642,8 @@ extern NSMutableDictionary *errorCode;
     if (buttonIndex == 1) {
       [_checkWifiHud hide:NO];
       _isNessesaryToCheckWifi = NO;
-      [self dismissViewControllerAnimated:YES completion:nil];
+      //[self dismissViewControllerAnimated:YES completion:nil];
+      [self.navigationController popViewControllerAnimated:YES];
     }
   }
   else if (alertView == _passEmptyAlert) {
@@ -659,7 +660,8 @@ extern NSMutableDictionary *errorCode;
     }
   }
   else {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    //[self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
   }
 }
 

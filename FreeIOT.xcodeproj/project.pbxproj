@@ -333,6 +333,7 @@
 				4891779A1AB36521001AD487 /* Lib */,
 				48A804FB1AB5606E00125659 /* Framework */,
 				4891776D1AB06402001AD487 /* Supporting Files */,
+				4891776F1AB06402001AD487 /* main.m */,
 			);
 			path = FreeIOT;
 			sourceTree = "<group>";
@@ -343,7 +344,6 @@
 				48D52A481ADBD36D00C3FB2B /* Strings.strings */,
 				4891777A1AB06402001AD487 /* Images.xcassets */,
 				4891776E1AB06402001AD487 /* Info.plist */,
-				4891776F1AB06402001AD487 /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

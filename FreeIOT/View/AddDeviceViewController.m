@@ -19,6 +19,7 @@
 
 extern NSString *const kKeyUsernamePassword;
 extern NSMutableDictionary *errorCode;
+extern NSString *HOST_URL;
 
 @interface AddDeviceViewController () <MBProgressHUDDelegate, GCDAsyncSocketDelegate> {
   MBProgressHUD *_HUD;

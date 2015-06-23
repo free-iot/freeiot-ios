@@ -18,6 +18,7 @@ extern NSString * const kKeyUsername;
 extern NSString * const kKeyPassword;
 
 extern NSMutableDictionary *errorCode;
+extern NSString *HOST_URL;
 
 #define TAG_DEVICE_STATUS   @"device_status"
 #define TAG_DEVICE_VALUE  @"device_value"

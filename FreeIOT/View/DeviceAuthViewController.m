@@ -16,6 +16,7 @@
 
 extern NSString * const kKeyUsernamePassword;
 extern NSMutableDictionary *errorCode;
+extern NSString *HOST_URL;
 
 #define TAG_USERS_LIST    @"device_value"
 #define TAG_DELETE_USER   @"device_unbind"

@@ -1110,6 +1110,7 @@
                                 </state>
                                 <connections>
                                     <action selector="registerBtnTouchUpInside:" destination="peB-UT-Reu" eventType="touchUpInside" id="q3l-qb-ve4"/>
+                                    <action selector="registerBtnTouchUpOutside:" destination="peB-UT-Reu" eventType="touchUpOutside" id="toT-md-kmh"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PtU-Jg-H4C">
@@ -1123,6 +1124,7 @@
                                 </state>
                                 <connections>
                                     <action selector="forgetBtnTouchUpInside:" destination="peB-UT-Reu" eventType="touchUpInside" id="kta-gX-XI1"/>
+                                    <action selector="forgetBtnTouchUpOutside:" destination="peB-UT-Reu" eventType="touchUpOutside" id="Gbp-tO-ptY"/>
                                 </connections>
                             </button>
                         </subviews>

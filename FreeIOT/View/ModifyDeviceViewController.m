@@ -14,6 +14,7 @@
 extern NSString * const kKeyUsernamePassword;
 
 extern NSMutableDictionary *errorCode;
+extern NSString *HOST_URL;
 
 @interface ModifyDeviceViewController() {
   MBProgressHUD   *_HUD;

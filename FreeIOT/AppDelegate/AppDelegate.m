@@ -12,7 +12,7 @@
 
 
 NSMutableDictionary *errorCode;
-
+NSString *HOST_URL = HOST_URL_FORMAL;
 
 @interface AppDelegate ()
 

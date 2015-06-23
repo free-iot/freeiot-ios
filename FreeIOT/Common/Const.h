@@ -15,7 +15,10 @@
 #define NSLog(...) {}
 #endif
 
-#define HOST_URL                @"https://api.pandocloud.com"
+//#define HOST_URL                @"https://api.pandocloud.com"
+#define HOST_URL_FORMAL         @"https://api.pandocloud.com"
+#define HOST_URL_TEST           @"https://testapi.pandocloud.com"
+#define HOST_URL_STAGE          @"https://stageapi.pandocloud.com"
 
 #define LOGIN_PATH              @"/v1/users/authentication"
 #define LOGOUT_PATH             @"/v1/users/logout"

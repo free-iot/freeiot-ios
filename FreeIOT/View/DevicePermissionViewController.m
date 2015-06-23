@@ -15,6 +15,7 @@
 extern NSString * const kKeyUsernamePassword;
 
 extern NSMutableDictionary *errorCode;
+extern NSString *HOST_URL;
 
 
 @interface DevicePermissionViewController () <MBProgressHUDDelegate,UIPickerViewDelegate, UITextFieldDelegate,UIPickerViewDataSource> {

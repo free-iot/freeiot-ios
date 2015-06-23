@@ -27,6 +27,9 @@ NSString * const kKeyUUID = @"com.PandoCloud.OutletApp.uuid";
 NSString * const kKeyPushToken = @"com.PandoCloud.OutletApp.pushtoken";
 
 extern NSMutableDictionary *errorCode;
+extern NSString *HOST_URL;
+
+NSInteger backForTest = 0;
 
 @interface LoginViewController () <MBProgressHUDDelegate> {
   MBProgressHUD *_HUD;
@@ -78,6 +81,8 @@ extern NSMutableDictionary *errorCode;
 }
 
 -(void)viewDidAppear:(BOOL)animated {
+    
+  backForTest = 0;
   NSMutableDictionary *usernamepasswdKVPairs = (NSMutableDictionary *)[CHKeychain load:kKeyUsernamePassword];
 
   if (usernamepasswdKVPairs != nil) {
@@ -125,6 +130,58 @@ extern NSMutableDictionary *errorCode;
   ((RegisterViewController *)regVC).titleStr = LocalStr(@"RESET_TITLE");
   
   [self presentViewController:regVC animated:YES completion:nil];
+}
+
+- (IBAction)forgetBtnTouchUpOutside:(id)sender {
+    NSLog(@"forget button outside");
+    if ([[_usernameText text] isEqualToString:@"pc1"]
+        || [[_usernameText text] isEqualToString:@"pc2"]
+        || [[_usernameText text] isEqualToString:@"pc3"]) {
+        backForTest++;
+    }
+}
+
+- (IBAction)registerBtnTouchUpOutside:(id)sender {
+    NSLog(@"register button outside");
+    
+    if (backForTest == 3) {
+        if ([[_usernameText text] isEqualToString:@"pc1"]) {
+            [_usernameText setText:@""];
+            HOST_URL = HOST_URL_FORMAL;
+            
+            UIAlertView *temp = [[UIAlertView alloc] initWithTitle:@"app"
+                                                           message:nil
+                                                          delegate:nil
+                                                 cancelButtonTitle:LocalStr(@"STR_OK")
+                                                 otherButtonTitles:nil];
+            [temp show];
+        }
+        else if ([[_usernameText text] isEqualToString:@"pc2"]) {
+            [_usernameText setText:@""];
+            HOST_URL = HOST_URL_TEST;
+            
+            UIAlertView *temp = [[UIAlertView alloc] initWithTitle:@"test"
+                                                           message:nil
+                                                          delegate:nil
+                                                 cancelButtonTitle:LocalStr(@"STR_OK")
+                                                 otherButtonTitles:nil];
+            [temp show];
+            
+        }
+        else if ([[_usernameText text] isEqualToString:@"pc3"]) {
+            [_usernameText setText:@""];
+            HOST_URL = HOST_URL_STAGE;
+            
+            UIAlertView *temp = [[UIAlertView alloc] initWithTitle:@"stage"
+                                                           message:nil
+                                                          delegate:nil
+                                                 cancelButtonTitle:LocalStr(@"STR_OK")
+                                                 otherButtonTitles:nil];
+            [temp show];
+        }
+    }
+    
+    backForTest = 0;
 }
 
 - (void)observeTextChange {

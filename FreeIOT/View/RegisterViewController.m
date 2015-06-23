@@ -17,6 +17,7 @@ extern NSString * const kKeyUsername;
 extern NSString * const kKeyPassword;
 
 extern NSMutableDictionary *errorCode;
+extern NSString *HOST_URL;
 
 #define TAG_AUTH_CODE @"authcode"
 #define TAG_REGISTER  @"register"

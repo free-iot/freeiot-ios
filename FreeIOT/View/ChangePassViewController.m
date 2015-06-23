@@ -16,6 +16,7 @@ extern NSString *const kKeyUsername;
 extern NSString *const kKeyPassword;
 
 extern NSMutableDictionary *errorCode;
+extern NSString *HOST_URL;
 
 @interface ChangePassViewController() {
   MBProgressHUD *_HUD;

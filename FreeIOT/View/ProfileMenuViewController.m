@@ -17,6 +17,7 @@ extern NSString * const kKeyUsername;
 extern NSString * const kKeyPassword;
 
 extern NSMutableDictionary *errorCode;
+extern NSString *HOST_URL;
 
 #define TAG_CHANGE_PASS   @"change_pass"
 #define TAG_LOGOUT      @"logout"

@@ -24,7 +24,7 @@ extern NSString *HOST_URL;
 #define TAG_DEVICE_VALUE  @"device_value"
 
 
-@interface DeviceDetailViewController () <UIWebViewDelegate, MBProgressHUDDelegate, WebViewJSBridgeDelegate> {
+@interface DeviceDetailViewController () <UIWebViewDelegate, UIScrollViewDelegate,MBProgressHUDDelegate, WebViewJSBridgeDelegate> {
   IBOutlet UIWebView *_devWebView;
   MBProgressHUD *_HUD;
   WebViewJavascriptBridge *_bridge;
@@ -45,6 +45,7 @@ extern NSString *HOST_URL;
   
   _devWebView.scalesPageToFit = YES;
   //devWebView.delegate = self;
+  _devWebView.scrollView.delegate = self;
   
   _connSet = [NSMutableDictionary dictionary];
   _recvData = [NSMutableData data];
@@ -398,6 +399,13 @@ extern NSString *HOST_URL;
   UIViewController *myDevVC = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
   myDevVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
   [self presentViewController:myDevVC animated:YES completion:nil];
+}
+
+
+#pragma mark - scrollview delegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [_devWebView reload];
 }
 
 @end

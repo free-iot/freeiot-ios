@@ -81,9 +81,9 @@ extern NSString *HOST_URL;
                  [_authText.text isEqualToString:@"不需解绑即可重新绑定"]?[NSNumber numberWithInt:1]:[NSNumber numberWithInt:2],
                  @"secure_level",nil];
   NSData *jsonInputData = [NSJSONSerialization dataWithJSONObject:inputData options:NSJSONWritingPrettyPrinted error:nil];
-  NSString *jsonInputString = [[NSString alloc] initWithData:jsonInputData encoding:NSUTF8StringEncoding];
+  //NSString *jsonInputString = [[NSString alloc] initWithData:jsonInputData encoding:NSUTF8StringEncoding];
   
-  NSLog(@"req = %@", jsonInputString);
+  NSLog(@"req = %@", [[NSString alloc] initWithData:jsonInputData encoding:NSUTF8StringEncoding]);
   
   
   NSURL *url = [NSURL URLWithString:[[NSString stringWithFormat:@"%@"MODIFY_DEVICE_PATH, HOST_URL, _identifier] URLEncodedString]];

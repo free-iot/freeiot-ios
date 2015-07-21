@@ -45,6 +45,11 @@ NSInteger backForTest = 0;
 - (void)viewDidLoad {
   [super viewDidLoad];
   // Do any additional setup after loading the view.
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [self setNeedsStatusBarAppearanceUpdate];
+    
+    [[UITextField appearance] setTintColor:[UIColor grayColor]];
   
   [NSThread sleepForTimeInterval:3.0];   //设置进程停止3秒
   
@@ -84,6 +89,7 @@ NSInteger backForTest = 0;
     
   backForTest = 0;
   NSMutableDictionary *usernamepasswdKVPairs = (NSMutableDictionary *)[CHKeychain load:kKeyUsernamePassword];
+    
 
   if (usernamepasswdKVPairs != nil) {
     UIViewController *myDevVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RootViewController"];
@@ -517,6 +523,7 @@ NSInteger backForTest = 0;
   });
 }
 
+#if 1
 //https
 - (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
   return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
@@ -532,7 +539,7 @@ NSInteger backForTest = 0;
     [[challenge sender]  continueWithoutCredentialForAuthenticationChallenge: challenge];
   }
 }
-
+#endif
 
 
 @end

@@ -59,7 +59,6 @@ NSString *HOST_URL = HOST_URL_FORMAL;
   }
 #endif
   
-  
   errorCode = [NSMutableDictionary dictionary];
   
   [errorCode setObject:LocalStr(@"系统错误") forKey:[NSNumber numberWithInt:10001]];

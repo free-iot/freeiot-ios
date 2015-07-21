@@ -75,9 +75,10 @@ extern NSString *HOST_URL;
                  nil];
   
   NSData *jsonInputData = [NSJSONSerialization dataWithJSONObject:inputData options:NSJSONWritingPrettyPrinted error:nil];
-  NSString *jsonInputString = [[NSString alloc] initWithData:jsonInputData encoding:NSUTF8StringEncoding];
+    
+  //NSString *jsonInputString = [[NSString alloc] initWithData:jsonInputData encoding:NSUTF8StringEncoding];
   
-  NSLog(@"req = %@", jsonInputString);
+  NSLog(@"req = %@", [[NSString alloc] initWithData:jsonInputData encoding:NSUTF8StringEncoding]);
 
 
   NSURL *url = [NSURL URLWithString:[[NSString stringWithFormat:@"%@%@", HOST_URL, CHANGE_PASS_PATH] URLEncodedString]];

@@ -446,9 +446,9 @@ extern NSString *HOST_URL;
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   
-  NSInteger cellNo = indexPath.section;// * 3 + indexPath.row;
+  //NSInteger cellNo = indexPath.section;// * 3 + indexPath.row;
   
-  NSLog(@"did select item %ld", (long)cellNo);
+  NSLog(@"did select item %ld", (long)indexPath.section);
   
 }
 

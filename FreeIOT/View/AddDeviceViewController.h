@@ -17,5 +17,6 @@
 @property(nonatomic, retain) IBOutlet UINavigationItem *barItem;
 @property(nonatomic, copy) NSDictionary *productInfo;
 @property(nonatomic, copy) NSString *accessToken;
+@property(copy, nonatomic) NSString *bssid;
 
 @end

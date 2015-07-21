@@ -61,9 +61,6 @@ extern NSString *HOST_URL;
   [super viewDidLoad];
   // Do any additional setup after loading the view.
   
-  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-  [self setNeedsStatusBarAppearanceUpdate];
-  
   [_barItem setTitle:LocalStr(@"MYDEVICE_TITLE")];
   //[_barItem.leftBarButtonItem setTitle:LocalStr(@"LEFT_BTN_TITLE")];
   

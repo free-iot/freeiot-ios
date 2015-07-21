@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4804156E1B5D18CD0096F0A5 /* PandoSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4804156C1B5D18C60096F0A5 /* PandoSdk.framework */; };
+		4804156F1B5D18CD0096F0A5 /* PandoSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4804156C1B5D18C60096F0A5 /* PandoSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		481B23151B2699E10070D8DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 481B23141B2699E10070D8DF /* AppDelegate.m */; };
 		481B236B1B269ABD0070D8DF /* CHKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 481B23171B269ABD0070D8DF /* CHKeychain.m */; };
-		481B236C1B269ABD0070D8DF /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 481B23191B269ABD0070D8DF /* GCDAsyncSocket.m */; };
-		481B236D1B269ABD0070D8DF /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 481B231B1B269ABD0070D8DF /* GCDAsyncUdpSocket.m */; };
 		481B236E1B269ABD0070D8DF /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 481B231E1B269ABD0070D8DF /* MBProgressHUD.m */; };
 		481B236F1B269ABD0070D8DF /* GlowImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 481B23211B269ABD0070D8DF /* GlowImageView.m */; };
 		481B23701B269ABD0070D8DF /* MenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 481B23231B269ABD0070D8DF /* MenuButton.m */; };
@@ -52,23 +52,34 @@
 		481B23AC1B269BB60070D8DF /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 481B239F1B269BB60070D8DF /* RegisterViewController.m */; };
 		481B23AD1B269BB60070D8DF /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 481B23A11B269BB60070D8DF /* RootViewController.m */; };
 		481B23B11B26AA3B0070D8DF /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = 481B23B01B26AA3B0070D8DF /* NSString+URLEncode.m */; };
-		489177701AB06402001AD487 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4891776F1AB06402001AD487 /* main.m */; };
 		4891777B1AB06402001AD487 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4891777A1AB06402001AD487 /* Images.xcassets */; };
 		4891779C1AB3666C001AD487 /* HttpApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 4891779B1AB3666C001AD487 /* HttpApi.m */; };
 		48A804FA1AB5605B00125659 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A804F91AB5605B00125659 /* CFNetwork.framework */; };
 		48AB7EB71AC19A7800DD729C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48AB7EB61AC19A7800DD729C /* Security.framework */; };
 		48D52A461ADBD36D00C3FB2B /* Strings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 48D52A481ADBD36D00C3FB2B /* Strings.strings */; };
+		48D7A3CC1B39418900A4D14C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D7A3CB1B39418900A4D14C /* main.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		4804156B1B5D0F250096F0A5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4804156F1B5D18CD0096F0A5 /* PandoSdk.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		4804156C1B5D18C60096F0A5 /* PandoSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PandoSdk.framework; sourceTree = "<group>"; };
 		481B23131B2699E10070D8DF /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = AppDelegate/AppDelegate.h; sourceTree = "<group>"; };
 		481B23141B2699E10070D8DF /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = AppDelegate/AppDelegate.m; sourceTree = "<group>"; };
 		481B23161B269ABD0070D8DF /* CHKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHKeychain.h; path = Lib/CHKeychain.h; sourceTree = "<group>"; };
 		481B23171B269ABD0070D8DF /* CHKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHKeychain.m; path = Lib/CHKeychain.m; sourceTree = "<group>"; };
-		481B23181B269ABD0070D8DF /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = Lib/GCDAsyncSocket.h; sourceTree = "<group>"; };
-		481B23191B269ABD0070D8DF /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = Lib/GCDAsyncSocket.m; sourceTree = "<group>"; };
-		481B231A1B269ABD0070D8DF /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncUdpSocket.h; path = Lib/GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
-		481B231B1B269ABD0070D8DF /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncUdpSocket.m; path = Lib/GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
 		481B231D1B269ABD0070D8DF /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = Lib/MBProgressHUD.h; sourceTree = "<group>"; };
 		481B231E1B269ABD0070D8DF /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = Lib/MBProgressHUD.m; sourceTree = "<group>"; };
 		481B23201B269ABD0070D8DF /* GlowImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlowImageView.h; sourceTree = "<group>"; };
@@ -168,7 +179,6 @@
 		481B23B01B26AA3B0070D8DF /* NSString+URLEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+URLEncode.m"; path = "Class/NSString+URLEncode.m"; sourceTree = "<group>"; };
 		4891776A1AB06402001AD487 /* FreeIOT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeIOT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4891776E1AB06402001AD487 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4891776F1AB06402001AD487 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4891777A1AB06402001AD487 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4891779B1AB3666C001AD487 /* HttpApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HttpApi.m; path = Lib/HttpApi.m; sourceTree = "<group>"; };
 		4891779D1AB366A4001AD487 /* HttpApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HttpApi.h; path = Lib/HttpApi.h; sourceTree = "<group>"; };
@@ -176,6 +186,7 @@
 		48AB7EB61AC19A7800DD729C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		48D52A491ADBD38100C3FB2B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Strings.strings"; sourceTree = "<group>"; };
 		48D52A4A1ADBD38C00C3FB2B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Strings.strings; sourceTree = "<group>"; };
+		48D7A3CB1B39418900A4D14C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4804156E1B5D18CD0096F0A5 /* PandoSdk.framework in Frameworks */,
 				48AB7EB71AC19A7800DD729C /* Security.framework in Frameworks */,
 				48A804FA1AB5605B00125659 /* CFNetwork.framework in Frameworks */,
 			);
@@ -333,7 +345,7 @@
 				4891779A1AB36521001AD487 /* Lib */,
 				48A804FB1AB5606E00125659 /* Framework */,
 				4891776D1AB06402001AD487 /* Supporting Files */,
-				4891776F1AB06402001AD487 /* main.m */,
+				48D7A3CB1B39418900A4D14C /* main.m */,
 			);
 			path = FreeIOT;
 			sourceTree = "<group>";
@@ -383,10 +395,6 @@
 			children = (
 				481B23161B269ABD0070D8DF /* CHKeychain.h */,
 				481B23171B269ABD0070D8DF /* CHKeychain.m */,
-				481B23181B269ABD0070D8DF /* GCDAsyncSocket.h */,
-				481B23191B269ABD0070D8DF /* GCDAsyncSocket.m */,
-				481B231A1B269ABD0070D8DF /* GCDAsyncUdpSocket.h */,
-				481B231B1B269ABD0070D8DF /* GCDAsyncUdpSocket.m */,
 				481B231D1B269ABD0070D8DF /* MBProgressHUD.h */,
 				481B231E1B269ABD0070D8DF /* MBProgressHUD.m */,
 				481B231F1B269ABD0070D8DF /* PopMenu */,
@@ -402,6 +410,7 @@
 		48A804FB1AB5606E00125659 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				4804156C1B5D18C60096F0A5 /* PandoSdk.framework */,
 				48AB7EB61AC19A7800DD729C /* Security.framework */,
 				48A804F91AB5605B00125659 /* CFNetwork.framework */,
 			);
@@ -435,6 +444,7 @@
 				489177661AB06402001AD487 /* Sources */,
 				489177671AB06402001AD487 /* Frameworks */,
 				489177681AB06402001AD487 /* Resources */,
+				4804156B1B5D0F250096F0A5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -456,7 +466,6 @@
 				TargetAttributes = {
 					489177691AB06402001AD487 = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = 6BEQU99RP5;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -511,6 +520,7 @@
 				481B23A41B269BB60070D8DF /* DeviceAuthViewController.m in Sources */,
 				481B23811B269ABD0070D8DF /* POPSpringAnimation.mm in Sources */,
 				481B237C1B269ABD0070D8DF /* POPDecayAnimation.mm in Sources */,
+				48D7A3CC1B39418900A4D14C /* main.m in Sources */,
 				481B23731B269ABD0070D8DF /* POPAnimation.mm in Sources */,
 				481B23AC1B269BB60070D8DF /* RegisterViewController.m in Sources */,
 				481B236F1B269ABD0070D8DF /* GlowImageView.m in Sources */,
@@ -522,7 +532,6 @@
 				481B23A91B269BB60070D8DF /* ModifyDeviceViewController.m in Sources */,
 				481B23A51B269BB60070D8DF /* DeviceDetailViewController.m in Sources */,
 				481B23A61B269BB60070D8DF /* DevicePermissionViewController.m in Sources */,
-				481B236C1B269ABD0070D8DF /* GCDAsyncSocket.m in Sources */,
 				4891779C1AB3666C001AD487 /* HttpApi.m in Sources */,
 				481B23A21B269BB60070D8DF /* AddDeviceViewController.m in Sources */,
 				481B23841B269ABD0070D8DF /* PopMenu.m in Sources */,
@@ -541,8 +550,6 @@
 				481B23851B269ABD0070D8DF /* XHRealTimeBlur.m in Sources */,
 				481B23AB1B269BB60070D8DF /* ProfileMenuViewController.m in Sources */,
 				481B23721B269ABD0070D8DF /* POPAnimatableProperty.mm in Sources */,
-				481B236D1B269ABD0070D8DF /* GCDAsyncUdpSocket.m in Sources */,
-				489177701AB06402001AD487 /* main.m in Sources */,
 				481B23871B269ABD0070D8DF /* RESideMenu.m in Sources */,
 				481B23151B2699E10070D8DF /* AppDelegate.m in Sources */,
 				481B236B1B269ABD0070D8DF /* CHKeychain.m in Sources */,
@@ -652,6 +659,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FreeIOT",
+				);
 				INFOPLIST_FILE = FreeIOT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -668,6 +679,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FreeIOT",
+				);
 				INFOPLIST_FILE = FreeIOT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

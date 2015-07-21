@@ -13,26 +13,31 @@
 #import "AddDeviceViewController.h"
 #import "MBProgressHUD.h"
 #import "Const.h"
-#import "GCDAsyncSocket.h"
 #import "NSString+URLEncode.h"
 #import "CHKeychain.h"
+
+#include <PandoSdk/PandoSdk.h>
+
 
 extern NSString *const kKeyUsernamePassword;
 extern NSMutableDictionary *errorCode;
 extern NSString *HOST_URL;
 
-@interface AddDeviceViewController () <MBProgressHUDDelegate, GCDAsyncSocketDelegate> {
+@interface AddDeviceViewController () <MBProgressHUDDelegate, PandoSdkDelegate> {
   MBProgressHUD *_HUD;
   MBProgressHUD *_checkWifiHud;
   UIAlertView *_exitAlert;
   UIAlertView *_passEmptyAlert;
-  GCDAsyncSocket *_asyncSocket;
-  NSTimer *_sendTimer;
+    UIAlertView *_ssidEmptyAlert;
+    NSTimer *_sendTimer;
   NSString *_token;
   NSInteger _tryCounts;
   NSInteger _bindCounts;
   NSMutableData *_recvData;
   BOOL _isNessesaryToCheckWifi;
+    NSString *_host;
+    NSInteger _tokenCounts;
+    PandoSdk *_psdk;
 }
 
 @end
@@ -59,56 +64,77 @@ extern NSString *HOST_URL;
   
   _isNessesaryToCheckWifi = YES;
   
-  _ssidText.text = [self getCurrentSSID];
+    NSString *ssid = [self getCurrentSSID];
+    _ssidText.text = [ssid copy];
+    _bssid = [self getCurrentBSSID];
+    
+    [_ssidText setUserInteractionEnabled:NO];
+    
+    _psdk = nil;
   
   if (_ssidText.text.length > 0)
   {
+    [_configBtn setBackgroundColor:[UIColor redColor]];
     [_configBtn setEnabled:YES];
   }
   
   [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(observeTextChange)name:UITextFieldTextDidChangeNotification object:_ssidText];
   
   [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(observeTextChange)name:UITextFieldTextDidChangeNotification object:_passText];
+    
+    _tryCounts = 0;
+    _bindCounts = 0;
   
   
-  NSString *msg = [NSString stringWithFormat:LocalStr(@"CHANGEWIFI_ALERT_MSG"), AP_SSID];
+    if (ssid == nil) {
+        NSString *msg = [NSString stringWithFormat:LocalStr(@"CHANGEWIFI_ALERT_MSG")];
   
-  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:LocalStr(@"CHANGEWIFI_ALERT_TITLE")
-                       message:msg
-                       delegate:nil
-                       cancelButtonTitle:LocalStr(@"STR_OK")
-                       otherButtonTitles:nil];
-  [alert show];
-  
-  
-  _tryCounts = 0;
-  _bindCounts = 0;
-  
-  _checkWifiHud = [[MBProgressHUD alloc] initWithView:self.view];
-  
-  UITapGestureRecognizer *HUDSingleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(HUDSingleTap:)];
-  
-  [_checkWifiHud addGestureRecognizer:HUDSingleTap];
-  
-  _checkWifiHud.dimBackground = YES;
-  _checkWifiHud.delegate = self;
-  _checkWifiHud.labelText = [NSString stringWithFormat:LocalStr(@"STR_CHANGE_WIFI"), AP_SSID];
-  
-  [self.view addSubview:_checkWifiHud];
-  
-  [_checkWifiHud showWhileExecuting:@selector(doCheckSSID) onTarget:self withObject:nil animated:YES];
-  
+        _ssidEmptyAlert = [[UIAlertView alloc]initWithTitle:LocalStr(@"CHANGEWIFI_ALERT_TITLE")
+                                                       message:msg
+                                                      delegate:self
+                                             cancelButtonTitle:LocalStr(@"STR_OK")
+                                             otherButtonTitles:nil];
+        [_ssidEmptyAlert show];
+        
+#if 0
+        _checkWifiHud = [[MBProgressHUD alloc] initWithView:self.view];
+        
+        UITapGestureRecognizer *HUDSingleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(HUDSingleTap:)];
+        
+        [_checkWifiHud addGestureRecognizer:HUDSingleTap];
+        
+        _checkWifiHud.dimBackground = YES;
+        _checkWifiHud.delegate = self;
+        _checkWifiHud.labelText = [NSString stringWithFormat:LocalStr(@"STR_CHANGE_WIFI"), AP_SSID];
+        
+        [self.view addSubview:_checkWifiHud];
+        
+        [_checkWifiHud showWhileExecuting:@selector(doCheckSSID) onTarget:self withObject:nil animated:YES];
+#endif
+        
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-  [_checkWifiHud hide:NO];
-  _isNessesaryToCheckWifi = NO;
+  //[_checkWifiHud hide:NO];
+  //_isNessesaryToCheckWifi = NO;
+    
+    [_sendTimer invalidate];
+    
+//    if (self._esptouchTask != nil)
+//    {
+//        [self._esptouchTask interrupt];
+//    }
+    
+    if (_psdk != nil) {
+        [_psdk stopConfig];
+    }
+    
 }
 
 - (void)doCheckSSID {
   while (_isNessesaryToCheckWifi) {
     NSString *ssid = [self getCurrentSSID];
-    //NSLog(@"ssid = %@, code = %@", ssid, [self.productInfo objectForKey:@"code"]);
     
     if ([ssid isEqualToString:AP_SSID])
       break;
@@ -135,59 +161,7 @@ extern NSString *HOST_URL;
   [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
 }
 
-- (IBAction)backPressed:(id)sender {
-  [self dismissViewControllerAnimated:NO completion:nil];
-  [self.view removeFromSuperview];
-}
 
-- (IBAction)bindDeviceBtnTouchUpInside:(id)sender {
-  
-  NSDictionary *inputData = [NSDictionary dictionaryWithObjectsAndKeys:_token, @"device_key",nil];
-  NSData *jsonInputData = [NSJSONSerialization dataWithJSONObject:inputData options:NSJSONWritingPrettyPrinted error:nil];
-  NSString *jsonInputString = [[NSString alloc] initWithData:jsonInputData encoding:NSUTF8StringEncoding];
-  
-  NSString *req = [NSString stringWithFormat:@"%@%@", HOST_URL, BIND_DEVICE_PATH];
-  
-  NSLog(@"req = %@\n%@", req, jsonInputString);
-  
-  
-  
-  NSURL *url = [NSURL URLWithString:[req URLEncodedString]];
-  NSString *method = @"POST";
-  
-  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-  
-  [request addValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-  [request addValue:PRODUCT_KEY forHTTPHeaderField:@"Product-Key"];
-  [request addValue:self.accessToken forHTTPHeaderField:@"Access-Token"];
-  
-
-  [request setHTTPBody: [jsonInputString dataUsingEncoding:NSUTF8StringEncoding]];
-
-  
-  [request setHTTPMethod:method];
-  
-  NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-  
-  NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
-  [conn setDelegateQueue:queue];
-  [conn start];
-  
-  if (conn) {
-    NSLog(@"connect ok");
-    
-    _HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
-    _HUD.dimBackground = YES;
-    
-    // Regiser for HUD callbacks so we can remove it from the window at the right time
-    _HUD.delegate = self;
-    //HUD.labelText = @"绑定中";
-  }
-  else {
-    NSLog(@"connect error");
-  }
-}
 
 - (void)startToBindDevice {
   _recvData = [NSMutableData data];
@@ -226,6 +200,9 @@ extern NSString *HOST_URL;
 - (IBAction)startConfigBtnTouchUpInside:(id)sender {
   //[self.ssidText resignFirstResponder];
   [self.passText resignFirstResponder];
+    
+    if (_psdk == nil)
+        _psdk = [[PandoSdk alloc]initWithDelegate:self];
   
   if ([self.passText.text isEqualToString:@""]) {
     _passEmptyAlert = [[UIAlertView alloc] initWithTitle:@""
@@ -236,7 +213,8 @@ extern NSString *HOST_URL;
     [_passEmptyAlert show];
   }
   else {
-    [self configDevice];
+      
+      [_psdk configDeviceToWiFi:[_ssidText text] withPassword:[_passText text] isHidden:NO];
     
     _HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
@@ -262,175 +240,6 @@ extern NSString *HOST_URL;
 
 #pragma mark - local
 
-- (void)checkConfig {
-  NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:@"check_config", @"action", nil];
-  
-  NSData *jsonInputData = [NSJSONSerialization dataWithJSONObject:data options:NSJSONWritingPrettyPrinted error:nil];
-  
-  [self sendData:jsonInputData withTag:1];
-  
-  _tryCounts++;
-  
-  if (_tryCounts >= 20) {
-    [_sendTimer invalidate];
-    
-    [_HUD hide:YES];
-    
-    UIAlertView *temp = [[UIAlertView alloc] initWithTitle:LocalStr(@"CONFIGFAIL_ALERT_TITLE")
-                             message:LocalStr(@"CONFIGFAIL_ALERT_MSG")
-                            delegate:nil
-                       cancelButtonTitle:LocalStr(@"STR_OK")
-                       otherButtonTitles:nil];
-    [temp show];
-    
-    _tryCounts = 0;
-  }
-}
-
-- (void)requestToken {
-  NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:@"token", @"action", nil];
-  
-  NSData *jsonInputData = [NSJSONSerialization dataWithJSONObject:data options:NSJSONWritingPrettyPrinted error:nil];
-  
-  [self sendData:jsonInputData withTag:2];
-}
-
-- (void)exitConfig {
-  NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:@"exit_config", @"action", nil];
-  
-  NSData *jsonInputData = [NSJSONSerialization dataWithJSONObject:data options:NSJSONWritingPrettyPrinted error:nil];
-  
-  [self sendData:jsonInputData withTag:3];
-  
-  [_sendTimer invalidate];
-  _sendTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(waitChangeSSID) userInfo:nil repeats:NO];
-}
-
-- (void)waitChangeSSID {
-  int n = 12;
-  
-  while (n) {
-    NSString *ssid = [self getCurrentSSID];
-    NSLog(@"ssid = %@, code = %@", ssid, [self.productInfo objectForKey:@"code"]);
-    
-    if ([ssid isEqualToString:[self.productInfo objectForKey:@"code"]] == NO)
-      break;
-    
-    n--;
-    sleep(5);
-  }
-  
-  if (n > 0) {
-    [self startToBindDevice];
-  }
-  else {
-    UIAlertView *temp = [[UIAlertView alloc] initWithTitle:LocalStr(@"BINDDEVICE_FAIL_ALERT_TITLE")
-                             message:nil
-                            delegate:nil
-                       cancelButtonTitle:LocalStr(@"STR_OK")
-                       otherButtonTitles:nil];
-    [temp show];
-    
-    [_HUD hide:YES];
-  }
-}
-
-- (void)configDevice {
-#if 1
-
-  NSDictionary *inputData = [NSDictionary dictionaryWithObjectsAndKeys:self.passText.text,
-                 @"password",
-                 @"config",
-                 @"action",
-                 self.ssidText.text,
-                 @"ssid", nil];
-  
-  NSData *jsonInputData = [NSJSONSerialization dataWithJSONObject:inputData options:NSJSONWritingPrettyPrinted error:nil];
-  
-  
-  [self sendData:jsonInputData withTag:0];
-  
-  
-  _sendTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(checkConfig) userInfo:nil repeats:YES];
-  
-  
-#endif
-}
-
-- (void) sendData:(NSData *)data withTag:(long)tag {
-  NSString *HOST = [self getIPAddress];
-  NSError *error = nil;
-  
-  if (_asyncSocket == nil) {
-    _asyncSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    _asyncSocket.delegate = self;
-  }
-  
-  if (_asyncSocket.isConnected == NO) {
-    if ([_asyncSocket connectToHost:HOST onPort:8890 withTimeout:-1 error:&error]) {
-      NSLog(@"connectToHost return ok");
-    }
-  }
-  
-  UInt32 dataLen = htonl((UInt32)[data length]);
-  UInt16 magic = htons(0x7064);
-  UInt16 type = htons(0x0001);
-  
-  NSMutableData *writeData = [NSMutableData dataWithBytes:&magic length:sizeof(magic)];
-  [writeData appendData:[NSData dataWithBytes:&type length:sizeof(type)]];
-  [writeData appendData:[NSData dataWithBytes:&dataLen length:sizeof(dataLen)]];
-  [writeData appendData:data];
-  
-  NSString *jsonInputString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-  
-  NSLog(@"write = %@", jsonInputString);
-  
-  [_asyncSocket writeData:writeData withTimeout:-1 tag:tag];
-  
-  if (tag != 0) {
-    [_asyncSocket readDataWithTimeout:-1 tag:tag];
-  }
-}
-
-- (NSString *)getIPAddress {
-  NSString *address = @"error";
-  struct ifaddrs *interfaces = NULL;
-  struct ifaddrs *temp_addr = NULL;
-  int success = 0;
-  
-  // retrieve the current interfaces - returns 0 on success
-  success = getifaddrs(&interfaces);
-  if (success == 0) {
-    // Loop through linked list of interfaces
-    temp_addr = interfaces;
-    while (temp_addr != NULL) {
-      if( temp_addr->ifa_addr->sa_family == AF_INET) {
-        // Check if interface is en0 which is the wifi connection on the iPhone
-        if ([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"]) {
-          // Get NSString from C String
-          address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
-        }
-      }
-      temp_addr = temp_addr->ifa_next;
-    }
-  }
-  
-  // Free memory
-  freeifaddrs(interfaces);
-  
-  NSString *gatewayIp = nil;
-  
-  for (int i = (int)[address length] - 1; i > 0; i--) {
-    if ([address characterAtIndex:i] == '.') {
-      gatewayIp = [NSString stringWithFormat:@"%@.1", [address substringToIndex:i]];
-      break;
-    }
-  }
-  
-  return gatewayIp;
-}
-
-
 - (NSString *)getCurrentSSID {
   NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
   NSLog(@"Supported interfaces: %@", ifs);
@@ -451,88 +260,26 @@ extern NSString *HOST_URL;
   return ssid;
 }
 
-#pragma mark -
-#pragma mark GCDAsyncSocket
-
-#if 1
-- (void)socket:(GCDAsyncSocket *)sock willDisconnectWithError:(NSError *)err {
-  NSLog(@"willDisconnectWithError");
-  //[self logInfo:FORMAT(@"Client Disconnected: %@:%hu", [sock connectedHost], [sock connectedPort])];
-  if (err) {
-    NSLog(@"错误报告：%@",err);
-  }else{
-    NSLog(@"连接工作正常");
-  }
-  _asyncSocket = nil;
-}
-
-- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port {
-  NSLog(@"didConnectToHost");
-  
-  
-
-  //[sock readDataWithTimeout:0.5 tag:0];
-  
-  //[sock readDataWithTimeout:-1 tag:0];
-}
-
-- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
-  NSLog(@"didReadData");
-  
-  if (tag != 0) {
-    if ([data length] > 8) {
-      NSData *content = [data subdataWithRange:NSMakeRange(8, [data length] - 8)];
-      //NSString *msg = [[NSString alloc] initWithData:strData encoding:NSUTF8StringEncoding];
-      
-      NSDictionary * respDic = [NSJSONSerialization JSONObjectWithData:content options:NSJSONReadingMutableLeaves error:nil];
-      
-      if (tag == 1) {
-        if ([[respDic objectForKey:@"code"] isEqualToNumber:[NSNumber numberWithInt:0]]) {
-          [_sendTimer invalidate];
-          _sendTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(requestToken) userInfo:nil repeats:YES];
-        }
-      }
-      else if (tag == 2) {
-        _token = [respDic objectForKey:@"token"];
+- (NSString *)getCurrentBSSID {
+    NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
+    NSLog(@"Supported interfaces: %@", ifs);
+    id info = nil;
+    NSString *bssid = nil;
+    for (NSString *ifnam in ifs) {
+        info = (__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)ifnam);
+        NSLog(@"%@ => %@", ifnam, info);
         
-        NSLog(@"token = %@", _token);
-        
-        if (_token != nil) {
-          [_sendTimer invalidate];
-          
-          _sendTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(exitConfig) userInfo:nil repeats:NO];
+        if (info[@"BSSID"]) {
+            bssid = info[@"BSSID"];
         }
-      }
-    
+        
+        if (info && [info count]) {
+            break;
+        }
     }
-  }
-  
-  [sock disconnect];
-  //[sock readDataWithTimeout:-1 tag:0]; //一直监听网络
-  
+    return bssid;
 }
 
-- (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag {
-  NSLog(@"didWriteDataWithTag %ld", tag);
-  if (tag == 3)
-  {
-    [sock disconnectAfterWriting];
-  }
-}
-
-- (void)socket:(GCDAsyncSocket *)sock didReadPartialDataOfLength:(NSUInteger)partialLength tag:(long)tag {
-  
-  
-}
-
-- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err {
-  //DDLogInfo(@"socketDidDisconnect:%p withError: %@", sock, err);
-  NSLog(@"socketDidDisconnect:%p withError: %@", sock, err);
-  //dispatch_async(dispatch_get_main_queue(), ^{
-   //   [itcpClient OnConnectionError:err];
-  //});
-}
-#endif
 
 #pragma mark - NSURLConnection 回调方法
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -649,8 +396,14 @@ extern NSString *HOST_URL;
   }
   else if (alertView == _passEmptyAlert) {
     if (buttonIndex == 1) {
-      [self configDevice];
       
+        if (_psdk == nil)
+            _psdk = [[PandoSdk alloc]initWithDelegate:self];
+        
+        [_psdk configDeviceToWiFi:[_ssidText text] withPassword:[_passText text] isHidden:NO];
+        
+        
+        
       _HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
       
       _HUD.dimBackground = YES;
@@ -665,5 +418,153 @@ extern NSString *HOST_URL;
     [self.navigationController popViewControllerAnimated:YES];
   }
 }
+
+
+
+
+- (void)pandoSdk:(PandoSdk *)pandoSdk didConfigDeviceToWiFi:(NSString *)bssid deviceKey:(NSString *)deviceKey error:(NSError *)error {
+    
+    if (error == nil) {
+        //[[[UIAlertView alloc]initWithTitle:@"配置成功" message:nil delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil] show];
+        
+        _token = [deviceKey copy];
+        
+        [self startToBindDevice];
+    }
+    else {
+        [[[UIAlertView alloc]initWithTitle:@"配置失败" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil] show];
+    }
+    
+    
+    [_HUD hide:YES];
+    
+}
+
+
+
+#if 0
+
+#pragma mark - esp
+
+- (IBAction)bindDeviceBtnTouchUpInside:(id)sender {
+    
+    NSDictionary *inputData = [NSDictionary dictionaryWithObjectsAndKeys:_token, @"device_key",nil];
+    NSData *jsonInputData = [NSJSONSerialization dataWithJSONObject:inputData options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *jsonInputString = [[NSString alloc] initWithData:jsonInputData encoding:NSUTF8StringEncoding];
+    
+    NSString *req = [NSString stringWithFormat:@"%@%@", HOST_URL, BIND_DEVICE_PATH];
+    
+    NSLog(@"req = %@\n%@", req, jsonInputString);
+    
+    
+    
+    NSURL *url = [NSURL URLWithString:[req URLEncodedString]];
+    NSString *method = @"POST";
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request addValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:PRODUCT_KEY forHTTPHeaderField:@"Product-Key"];
+    [request addValue:self.accessToken forHTTPHeaderField:@"Access-Token"];
+    
+    
+    [request setHTTPBody: [jsonInputString dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    [request setHTTPMethod:method];
+    
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    
+    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
+    [conn setDelegateQueue:queue];
+    [conn start];
+    
+    if (conn) {
+        NSLog(@"connect ok");
+        
+        _HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+        _HUD.dimBackground = YES;
+        
+        // Regiser for HUD callbacks so we can remove it from the window at the right time
+        _HUD.delegate = self;
+        //HUD.labelText = @"绑定中";
+    }
+    else {
+        NSLog(@"connect error");
+    }
+}
+
+- (void)waitChangeSSID {
+    int n = 12;
+    
+    while (n) {
+        NSString *ssid = [self getCurrentSSID];
+        NSLog(@"ssid = %@, code = %@", ssid, [self.productInfo objectForKey:@"code"]);
+        
+        if ([ssid isEqualToString:[self.productInfo objectForKey:@"code"]] == NO)
+            break;
+        
+        n--;
+        sleep(5);
+    }
+    
+    if (n > 0) {
+        [self startToBindDevice];
+    }
+    else {
+        UIAlertView *temp = [[UIAlertView alloc] initWithTitle:LocalStr(@"BINDDEVICE_FAIL_ALERT_TITLE")
+                                                       message:nil
+                                                      delegate:nil
+                                             cancelButtonTitle:LocalStr(@"STR_OK")
+                                             otherButtonTitles:nil];
+        [temp show];
+        
+        [_HUD hide:YES];
+    }
+}
+
+
+- (NSString *)getIPAddress {
+    NSString *address = @"error";
+    struct ifaddrs *interfaces = NULL;
+    struct ifaddrs *temp_addr = NULL;
+    int success = 0;
+    
+    // retrieve the current interfaces - returns 0 on success
+    success = getifaddrs(&interfaces);
+    if (success == 0) {
+        // Loop through linked list of interfaces
+        temp_addr = interfaces;
+        while (temp_addr != NULL) {
+            if( temp_addr->ifa_addr->sa_family == AF_INET) {
+                // Check if interface is en0 which is the wifi connection on the iPhone
+                if ([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"]) {
+                    // Get NSString from C String
+                    address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
+                }
+            }
+            temp_addr = temp_addr->ifa_next;
+        }
+    }
+    
+    // Free memory
+    freeifaddrs(interfaces);
+    
+    NSString *gatewayIp = nil;
+    
+    for (int i = (int)[address length] - 1; i > 0; i--) {
+        if ([address characterAtIndex:i] == '.') {
+            gatewayIp = [NSString stringWithFormat:@"%@.1", [address substringToIndex:i]];
+            break;
+        }
+    }
+    
+    return gatewayIp;
+}
+#endif
+
+
+
 
 @end

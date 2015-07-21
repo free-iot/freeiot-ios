@@ -381,9 +381,10 @@ extern NSString *HOST_URL;
   
   NSData *data = [[NSData alloc] initWithBase64EncodedString:[url lastPathComponent] options:0];
   
-  NSString *decodeData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+  //NSString *decodeData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
   
-  NSLog(@"decode data = %@", decodeData);
+    NSLog(@"decode data = %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+);
   
   NSArray *action = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
   

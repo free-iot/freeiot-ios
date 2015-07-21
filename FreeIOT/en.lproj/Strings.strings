@@ -29,9 +29,9 @@
 /* ----------------------------  alert title & msg ---------------------------- */
 
 "UNBIND_ALERT_MSG"                  = "After unbinding,you and your authorized users will lose the authority to operate device";
-"CHANGEWIFI_ALERT_TITLE"            = "请切换WiFi网络";
-"CHANGEWIFI_ALERT_MSG"              = "请点击手机\"设置\"->\"Wi-Fi\"，在WiFi列表中，连接到%@";
-"PASSEMPTY_ALERT_MSG"               = "您没有输入密码，确认WiFi网络无密码？";
+"CHANGEWIFI_ALERT_TITLE"            = "no WiFi network";
+"CHANGEWIFI_ALERT_MSG"              = "please make your phone connect to WiFi network";
+"PASSEMPTY_ALERT_MSG"               = "no password，leave empty？";
 "GIVEUP_ALERT_MSG"                  = "放弃本次配置";
 "CONFIGFAIL_ALERT_MSG"              = "无法完成配置，请确认:\n1.WiFi名称与密码是否输入正确;\n2.是否连接了插座发出的网络。";
 "CONFIGFAIL_ALERT_TITLE"            = "配置失败";

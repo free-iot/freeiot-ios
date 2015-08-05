@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4804156E1B5D18CD0096F0A5 /* PandoSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4804156C1B5D18C60096F0A5 /* PandoSdk.framework */; };
-		4804156F1B5D18CD0096F0A5 /* PandoSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4804156C1B5D18C60096F0A5 /* PandoSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		481B23151B2699E10070D8DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 481B23141B2699E10070D8DF /* AppDelegate.m */; };
 		481B236B1B269ABD0070D8DF /* CHKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 481B23171B269ABD0070D8DF /* CHKeychain.m */; };
 		481B236E1B269ABD0070D8DF /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 481B231E1B269ABD0070D8DF /* MBProgressHUD.m */; };
@@ -56,18 +54,20 @@
 		4891779C1AB3666C001AD487 /* HttpApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 4891779B1AB3666C001AD487 /* HttpApi.m */; };
 		48A804FA1AB5605B00125659 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A804F91AB5605B00125659 /* CFNetwork.framework */; };
 		48AB7EB71AC19A7800DD729C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48AB7EB61AC19A7800DD729C /* Security.framework */; };
+		48C759C91B71D11B00282D1F /* PandoSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C759C71B71D10800282D1F /* PandoSdk.framework */; };
+		48C759CA1B71D11B00282D1F /* PandoSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48C759C71B71D10800282D1F /* PandoSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		48D52A461ADBD36D00C3FB2B /* Strings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 48D52A481ADBD36D00C3FB2B /* Strings.strings */; };
 		48D7A3CC1B39418900A4D14C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D7A3CB1B39418900A4D14C /* main.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		4804156B1B5D0F250096F0A5 /* Embed Frameworks */ = {
+		48871A641B70A3D9007636A7 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4804156F1B5D18CD0096F0A5 /* PandoSdk.framework in Embed Frameworks */,
+				48C759CA1B71D11B00282D1F /* PandoSdk.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -75,7 +75,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4804156C1B5D18C60096F0A5 /* PandoSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PandoSdk.framework; sourceTree = "<group>"; };
 		481B23131B2699E10070D8DF /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = AppDelegate/AppDelegate.h; sourceTree = "<group>"; };
 		481B23141B2699E10070D8DF /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = AppDelegate/AppDelegate.m; sourceTree = "<group>"; };
 		481B23161B269ABD0070D8DF /* CHKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHKeychain.h; path = Lib/CHKeychain.h; sourceTree = "<group>"; };
@@ -184,6 +183,7 @@
 		4891779D1AB366A4001AD487 /* HttpApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HttpApi.h; path = Lib/HttpApi.h; sourceTree = "<group>"; };
 		48A804F91AB5605B00125659 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		48AB7EB61AC19A7800DD729C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		48C759C71B71D10800282D1F /* PandoSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PandoSdk.framework; sourceTree = "<group>"; };
 		48D52A491ADBD38100C3FB2B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Strings.strings"; sourceTree = "<group>"; };
 		48D52A4A1ADBD38C00C3FB2B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Strings.strings; sourceTree = "<group>"; };
 		48D7A3CB1B39418900A4D14C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -194,7 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4804156E1B5D18CD0096F0A5 /* PandoSdk.framework in Frameworks */,
+				48C759C91B71D11B00282D1F /* PandoSdk.framework in Frameworks */,
 				48AB7EB71AC19A7800DD729C /* Security.framework in Frameworks */,
 				48A804FA1AB5605B00125659 /* CFNetwork.framework in Frameworks */,
 			);
@@ -410,7 +410,7 @@
 		48A804FB1AB5606E00125659 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				4804156C1B5D18C60096F0A5 /* PandoSdk.framework */,
+				48C759C71B71D10800282D1F /* PandoSdk.framework */,
 				48AB7EB61AC19A7800DD729C /* Security.framework */,
 				48A804F91AB5605B00125659 /* CFNetwork.framework */,
 			);
@@ -444,7 +444,7 @@
 				489177661AB06402001AD487 /* Sources */,
 				489177671AB06402001AD487 /* Frameworks */,
 				489177681AB06402001AD487 /* Resources */,
-				4804156B1B5D0F250096F0A5 /* Embed Frameworks */,
+				48871A641B70A3D9007636A7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

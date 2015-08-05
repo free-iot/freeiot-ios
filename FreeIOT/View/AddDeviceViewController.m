@@ -214,7 +214,7 @@ extern NSString *HOST_URL;
   }
   else {
       
-      [_psdk configDeviceToWiFi:[_ssidText text] withPassword:[_passText text] isHidden:NO];
+      [_psdk configDeviceToWiFi:[_ssidText text] password:[_passText text] byMode:@"smartlink"];
     
     _HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
@@ -257,6 +257,7 @@ extern NSString *HOST_URL;
       break;
     }
   }
+    //return @"pandocloud";
   return ssid;
 }
 
@@ -400,7 +401,7 @@ extern NSString *HOST_URL;
         if (_psdk == nil)
             _psdk = [[PandoSdk alloc]initWithDelegate:self];
         
-        [_psdk configDeviceToWiFi:[_ssidText text] withPassword:[_passText text] isHidden:NO];
+        [_psdk configDeviceToWiFi:[_ssidText text] password:[_passText text] byMode:@"smartlink"];
         
         
         
@@ -440,7 +441,9 @@ extern NSString *HOST_URL;
     
 }
 
-
+- (void)pandoSdk:(PandoSdk *)pandoSdk didStopConfig:(BOOL)isStoped error:(NSError *)error {
+    
+}
 
 #if 0
 

@@ -348,8 +348,8 @@ extern NSString *HOST_URL;
 #pragma mark - button action
 
 - (IBAction)backBtnPressed:(id)sender {
-  [self dismissViewControllerAnimated:NO completion:nil];
-  [self.view removeFromSuperview];
+  [self dismissViewControllerAnimated:YES completion:nil];
+  //[self.view removeFromSuperview];
 }
 
 #pragma mark - UIWebView Delegate
@@ -383,8 +383,7 @@ extern NSString *HOST_URL;
   
   //NSString *decodeData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
   
-    NSLog(@"decode data = %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-);
+    NSLog(@"decode data = %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
   
   NSArray *action = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
   

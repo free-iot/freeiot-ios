@@ -54,20 +54,20 @@
 		4891779C1AB3666C001AD487 /* HttpApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 4891779B1AB3666C001AD487 /* HttpApi.m */; };
 		48A804FA1AB5605B00125659 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A804F91AB5605B00125659 /* CFNetwork.framework */; };
 		48AB7EB71AC19A7800DD729C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48AB7EB61AC19A7800DD729C /* Security.framework */; };
-		48C759C91B71D11B00282D1F /* PandoSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C759C71B71D10800282D1F /* PandoSdk.framework */; };
-		48C759CA1B71D11B00282D1F /* PandoSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48C759C71B71D10800282D1F /* PandoSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48CF5DE31BB12F8C004F3E8D /* PandoSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48CF5DE11BB12F84004F3E8D /* PandoSdk.framework */; };
+		48CF5DE41BB12F8C004F3E8D /* PandoSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48CF5DE11BB12F84004F3E8D /* PandoSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		48D52A461ADBD36D00C3FB2B /* Strings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 48D52A481ADBD36D00C3FB2B /* Strings.strings */; };
 		48D7A3CC1B39418900A4D14C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D7A3CB1B39418900A4D14C /* main.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		48871A641B70A3D9007636A7 /* Embed Frameworks */ = {
+		48CF5DE51BB12F8C004F3E8D /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				48C759CA1B71D11B00282D1F /* PandoSdk.framework in Embed Frameworks */,
+				48CF5DE41BB12F8C004F3E8D /* PandoSdk.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -183,7 +183,7 @@
 		4891779D1AB366A4001AD487 /* HttpApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HttpApi.h; path = Lib/HttpApi.h; sourceTree = "<group>"; };
 		48A804F91AB5605B00125659 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		48AB7EB61AC19A7800DD729C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		48C759C71B71D10800282D1F /* PandoSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PandoSdk.framework; sourceTree = "<group>"; };
+		48CF5DE11BB12F84004F3E8D /* PandoSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PandoSdk.framework; sourceTree = "<group>"; };
 		48D52A491ADBD38100C3FB2B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Strings.strings"; sourceTree = "<group>"; };
 		48D52A4A1ADBD38C00C3FB2B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Strings.strings; sourceTree = "<group>"; };
 		48D7A3CB1B39418900A4D14C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -194,7 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48C759C91B71D11B00282D1F /* PandoSdk.framework in Frameworks */,
+				48CF5DE31BB12F8C004F3E8D /* PandoSdk.framework in Frameworks */,
 				48AB7EB71AC19A7800DD729C /* Security.framework in Frameworks */,
 				48A804FA1AB5605B00125659 /* CFNetwork.framework in Frameworks */,
 			);
@@ -410,7 +410,7 @@
 		48A804FB1AB5606E00125659 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				48C759C71B71D10800282D1F /* PandoSdk.framework */,
+				48CF5DE11BB12F84004F3E8D /* PandoSdk.framework */,
 				48AB7EB61AC19A7800DD729C /* Security.framework */,
 				48A804F91AB5605B00125659 /* CFNetwork.framework */,
 			);
@@ -444,7 +444,7 @@
 				489177661AB06402001AD487 /* Sources */,
 				489177671AB06402001AD487 /* Frameworks */,
 				489177681AB06402001AD487 /* Resources */,
-				48871A641B70A3D9007636A7 /* Embed Frameworks */,
+				48CF5DE51BB12F8C004F3E8D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -461,7 +461,7 @@
 		489177621AB06402001AD487 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = liming_llm;
 				TargetAttributes = {
 					489177691AB06402001AD487 = {
@@ -593,6 +593,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -607,7 +608,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -644,7 +645,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -664,8 +665,9 @@
 					"$(PROJECT_DIR)/FreeIOT",
 				);
 				INFOPLIST_FILE = FreeIOT/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.PandoCloud.FreeIOT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -684,8 +686,9 @@
 					"$(PROJECT_DIR)/FreeIOT",
 				);
 				INFOPLIST_FILE = FreeIOT/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.PandoCloud.FreeIOT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

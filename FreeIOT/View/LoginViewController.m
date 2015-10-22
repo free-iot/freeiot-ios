@@ -286,7 +286,9 @@ NSInteger backForTest = 0;
                  [deviceDefault objectForKey:KEY_DEVICE_ID],
                  @"device_id",
                  [deviceDefault objectForKey:KEY_DEVICE_SECRET],
-                 @"device_secret", nil];
+                 @"device_secret",
+                @"mqtt",
+                @"protocol",nil];
   
   NSData *jsonInputData = [NSJSONSerialization dataWithJSONObject:inputData options:NSJSONWritingPrettyPrinted error:nil];
   NSString *jsonInputString = [[NSString alloc] initWithData:jsonInputData encoding:NSUTF8StringEncoding];
@@ -484,6 +486,13 @@ NSInteger backForTest = 0;
           [deviceDefaults objectForKey:KEY_DEVICE_BINDED] == NO) {
           [self deviceBind];
         }
+#if 0
+          NSDictionary *data = [respDic objectForKey:@"data"];
+          
+          if (data != nil)
+              NSLog(@"device login %@", data);
+#endif
+          
       }
       else {
         UIViewController *myDevVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RootViewController"];

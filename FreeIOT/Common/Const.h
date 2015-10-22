@@ -33,6 +33,7 @@
 #define DEVICE_LOGIN_PATH       @"/v1/devices/authentication"
 #define SET_DEVICE_VALUE        @"/v1/devices/%@/commands"
 #define DEVICE_STATUS           @"/v1/devices/%@/status/current"
+#define SET_DEVICE_STATUS       @"/v1/devices/%@/status"
 #define ALLOW_PERMITIONS        @"/v1/devices/%@/permissions"
 #define DEVICE_UNBIND_PATH      @"/v1/devices/%@/unbinding"
 #define MODIFY_DEVICE_PATH      @"/v1/devices/%@"

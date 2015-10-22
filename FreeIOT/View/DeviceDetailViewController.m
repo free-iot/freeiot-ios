@@ -21,6 +21,7 @@ extern NSMutableDictionary *errorCode;
 extern NSString *HOST_URL;
 
 #define TAG_DEVICE_STATUS   @"device_status"
+#define TAG_SET_DEVICE_STATUS   @"set_device_status"
 #define TAG_DEVICE_VALUE  @"device_value"
 
 
@@ -90,11 +91,15 @@ extern NSString *HOST_URL;
 }
 
 - (void)handleJSCall:(NSDictionary *)handlerMsg {
-  if ([[handlerMsg objectForKey:@"handlerName"] isEqualToString:@"currentStatus"]) {
+  if ([[handlerMsg objectForKey:@"handlerName"] isEqualToString:@"getCurrentStatus"] ||
+      [[handlerMsg objectForKey:@"handlerName"] isEqualToString:@"currentStatus"]) {
     [self getCurrentStatus:handlerMsg];
   }
   else if ([[handlerMsg objectForKey:@"handlerName"] isEqualToString:@"sendCommand"]) {
     [self setDeviceValue:handlerMsg];
+  }
+  else if ([[handlerMsg objectForKey:@"handlerName"] isEqualToString:@"setCurrentStatus"]) {
+      [self setDeviceStatus:handlerMsg];
   }
 }
 
@@ -106,6 +111,22 @@ extern NSString *HOST_URL;
   _HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
   _HUD.dimBackground = YES;
   _HUD.delegate = self;
+}
+
+- (void)setDeviceStatus:(NSDictionary *)handlerMsg {
+    
+    NSString *req = [NSString stringWithFormat:@"%@"SET_DEVICE_STATUS, HOST_URL, _identifier];
+    
+    NSData *jsonInputData = [NSJSONSerialization dataWithJSONObject:handlerMsg[@"data"] options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *jsonInputString = [[NSString alloc] initWithData:jsonInputData encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"http req = %@", jsonInputString);
+    
+    [self request:req content:jsonInputString tag:TAG_SET_DEVICE_STATUS cbId:handlerMsg[@"callbackId"]];
+    
+    _HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _HUD.dimBackground = YES;
+    _HUD.delegate = self;
 }
 
 - (void)setDeviceValue:(NSDictionary *)handlerMsg {
@@ -311,6 +332,38 @@ extern NSString *HOST_URL;
           [_bridge send:jsonBase64String];
         }
         
+      }
+      else if (connection == [[_connSet objectForKey:TAG_DEVICE_VALUE] objectAtIndex:0]) {
+          if ([[respDic objectForKey:@"code"] isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
+              UIAlertView *tempAlert = [[UIAlertView alloc] initWithTitle:LocalStr(@"STR_FAIL")
+                                                                  message:[errorCode objectForKey:[respDic objectForKey:@"code"]]
+                                                                 delegate:nil
+                                                        cancelButtonTitle:LocalStr(@"STR_OK")
+                                                        otherButtonTitles:nil];
+              [tempAlert show];
+              
+          }
+          else {
+              
+              NSDictionary *cbData = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0],
+                                      @"code",
+                                      @"",
+                                      @"message",nil];
+              
+              NSDictionary *cbMessage = [NSDictionary dictionaryWithObjectsAndKeys:[[_connSet objectForKey:TAG_SET_DEVICE_STATUS] objectAtIndex:1],
+                                         @"responseId",
+                                         cbData,
+                                         @"responseData", nil];
+              
+              NSData *jsonData = [NSJSONSerialization dataWithJSONObject:cbMessage options:NSJSONWritingPrettyPrinted error:nil];
+              
+              NSString *jsonBase64String = [jsonData base64EncodedStringWithOptions:0];
+              
+              NSLog(@"cbdata = %@", cbMessage);
+              
+              [_bridge send:jsonBase64String];
+          }
+          
       }
     }
     
